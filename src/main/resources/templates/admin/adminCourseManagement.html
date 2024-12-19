@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý học phần</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/adminCSS/adminCourseManagement.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Quản trị</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${admin.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/student-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-graduate"></i>
+                        Quản lý sinh viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/teacher-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-tie"></i>
+                        Quản lý giảng viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/course-management}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Quản lý học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/feedback-management}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Xem đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="content-wrap">
+                <p class="content-heading">Quản lý học phần</p>
+                
+                <table class="course-list">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã học phần</th>
+                            <th>Tên học phần</th>
+                            <th>Số tín chỉ</th>
+                            <th>Ngày học</th>
+                            <th>Ca học</th>
+                            <th>Phòng học</th>
+                            <th>Giảng viên</th>
+                            <th>Số sinh viên</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course, iterStat : ${courses}">
+                            <td th:text="${iterStat.index + 1}" class="centered"></td>
+                            <td th:text="${course.courseId}" class="centered"></td>
+                            <td th:text="${course.name}"></td>
+                            <td th:text="${course.credit}" class="centered" ></td>
+                            <td th:text="${course.date}" class="centered"></td>
+                            <td th:text="${course.time}" class="centered"></td>
+                            <td th:text="${course.room}" class="centered"></td>
+                            <td th:text="${course.teacherName}"></td>
+                            <td th:text="${course.numberStudent}" class="centered"></td>
+                            <td>
+                                <a th:href="@{/admin/course-management/update-course/{courseId}(courseId=${course.courseId})}" class="btn-edit">Sửa</a>
+       							<a th:href="@{/admin/course	-management/delete-course/{courseId}(courseId=${course.courseId})}" onclick="return confirm('Bạn có chắc chắn muốn xóa học phần này?')" class="btn-delete">Xóa</a>
+                            </td>
+                        </tr>
+						<tr th:if="${courses.size() == 0}">
+							<td colspan="10" style="text-align: center;">Không có học phần nào!</td>
+						</tr>
+					</tbody>
+                </table>
+    			<div class="notification" th:if="${message}" th:classappend="${messageType == 'success'} ? 'notification-success' : 'notification-error'">
+    				<p th:text="${message}"></p>
+    			</div>
+    			<a class="btn-insert" th:href="@{/admin/course-management/add-course}">Thêm học phần</a>
+            </div>
+        </div>
+    </div>
+
+	<script>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	const notification = document.querySelector(".notification");
+        	if(notification) {
+            	setTimeout(() => {
+                	notification.style.display = "none";
+            	}, 2000);
+        	}
+    	});
+	</script>
+</body>
+
+</html>

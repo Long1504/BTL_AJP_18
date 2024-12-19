@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/studentCSS/studentInfor.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Sinh viên</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${student.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/infor}"  style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/score-course-list}">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Kết quả học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/schedule}">
+                        <i class="sidebar-item-icon fa-solid fa-calendar-days"></i>
+                        Thời khóa biểu
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/feedback}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Gửi đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+        	<div class="notification" th:if="${message}" th:classappend="${messageType == 'success'} ? 'notification-success' : 'notification-error'">
+    			<p th:text="${message}"></p>
+    		</div>
+            <div class="personal-infor">
+                <img th:src="@{/img/avatar-infor.png}" alt="Avatar" class="infor-avatar">
+                <table class="infor-detail">
+                    <tr>
+                        <td>Họ và tên:</td>
+                        <td th:text="${student.name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Mã sinh viên:</td>
+                        <td th:text="${student.studentId}"></td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính:</td>
+                        <td th:text="${student.gender}"></td>
+                    </tr>
+                    <tr>
+                        <td>Ngày sinh:</td>
+                        <td th:text="${#dates.format(student.birthday, 'dd/MM/yyyy')}"></td>
+                    </tr>
+                    <tr>
+                        <td>Quê quán:</td>
+                        <td th:text="${student.hometown}"></td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại:</td>
+                        <td th:text="${student.phoneNumber}"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td th:text="${student.email}"></td>
+                    </tr>
+                    <tr>
+                        <td>Lớp:</td>
+                        <td th:text="${student.classId}"></td>
+                    </tr>
+                    <tr>
+                        <td>Khoa:</td>
+                        <td th:text="${student.departmentId}"></td>
+                    </tr>
+                </table>
+            </div>
+            <a th:href="@{/student/infor/change}" class="change-infor">
+                <i class="change-infor-icon fa-regular fa-pen-to-square"></i>
+                Sửa thông tin
+            </a>
+        </div>
+    </div>
+    
+    <script>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	const notification = document.querySelector(".notification");
+        	if(notification) {
+            	setTimeout(() => {
+                	notification.style.display = "none";
+            	}, 2000);
+        	}
+    	});
+	</script>
+</body>
+
+</html>

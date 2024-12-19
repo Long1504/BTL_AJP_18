@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/studentCSS/studentSchedule.css}">
+</head>
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Sinh viên</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${student.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/infor}">
+                        <i class="sidebar-item-icon fa-solid fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/score-course-list}">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Kết quả học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/schedule}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-calendar-days"></i>
+                        Thời khóa biểu
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/feedback}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Gửi đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <p class="content-heading">Thời khóa biểu</p>
+            <table class="schedule-list">
+                <thead>
+                    <tr>
+                        <th>Thứ 2</th>
+                        <th>Thứ 3</th>
+                        <th>Thứ 4</th>
+                        <th>Thứ 5</th>
+                        <th>Thứ 6</th>
+                        <th>Thứ 7</th>
+                        <th>Chủ nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Thứ 2'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Thứ 3'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Thứ 4'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Thứ 5'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Thứ 6'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Thứ 7'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:each="studentSchedule : ${studentSchedules}" th:if="${studentSchedule.date == 'Chủ nhật'}">
+                            	<p class="course-name" th:text="${studentSchedule.courseName}"></p>
+                            	<p class="course-id" th:text="${studentSchedule.courseId}"></p>
+                            	<p class="course-time" th:text="${studentSchedule.time}"></p>
+                            	<p class="course-place" th:text="${studentSchedule.room}"></p>
+                            	<p class="course-teacher" th:text="${studentSchedule.teacherName}"></p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

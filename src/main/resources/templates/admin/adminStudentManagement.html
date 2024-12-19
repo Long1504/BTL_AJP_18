@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sinh viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/adminCSS/adminStudentManagement.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Quản trị</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${admin.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/student-management}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-user-graduate"></i>
+                        Quản lý sinh viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/teacher-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-tie"></i>
+                        Quản lý giảng viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/course-management}">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Quản lý học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/feedback-management}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Xem đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="content-wrap">
+                <p class="content-heading">Quản lý sinh viên</p>
+                <div class="content-filter">
+                	<form action="/admin/student-management" method="get">
+	                    <label for="department">Khoa:</label>
+	                    <select class="content-filter-department" name="departmentId" id="department">
+	                        <option value="all" th:selected="${'all' == selectedDepartment}">Tất cả</option>
+	                        <option th:each="department : ${departments}" 
+	                        		th:value="${department.departmentId}" 
+	                        		th:text="${department.departmentId}"
+	                        		th:selected="${department.departmentId == selectedDepartment}"></option>
+	                    </select>
+	                    <label for="class">Lớp:</label>
+	                    <select class="content-filter-department" name="classId" id="class">
+	                        <option value="all" th:selected="${'all' == selectedClass}">Tất cả</option>
+	                        <option th:each="class : ${classes}" 
+	                        		th:value="${class.classId}" 
+	                        		th:text="${class.classId}"
+	                        		th:selected="${class.classId == selectedClass}"></option>
+	                    </select>
+	                    <input class="btn-filter" type="submit" value="Lọc"/>
+                	</form>
+                </div>
+                
+                <table class="student-list">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã sinh viên</th>
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Quê quán</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Mật khẩu</th>
+                            <th>Phân quyền</th>
+                            <th>Mã lớp</th>
+                            <th>Mã khoa</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="student, iterStat : ${students}">
+                            <td th:text="${iterStat.index + 1}" class="centered"></td>
+                            <td th:text="${student.studentId}" class="centered"></td>
+                            <td th:text="${student.name}"></td>
+                            <td th:text="${student.gender}" class="centered" ></td>
+                            <td th:text="${#dates.format(student.birthday, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${student.hometown}"></td>
+                            <td th:text="${student.phoneNumber}"></td>
+                            <td th:text="${student.email}"></td>
+                            <td th:text="${student.password}"></td>
+                            <td th:text="${student.role}" class="centered"></td>
+                            <td th:text="${student.classId}"></td>
+                            <td th:text="${student.departmentId}" class="centered"></td>
+                            <td>
+                                <a th:href="@{/admin/student-management/update-student/{studentId}(studentId=${student.studentId})}" class="btn-edit">Sửa</a>
+       							<a th:href="@{/admin/student-management/delete-student/{studentId}(studentId=${student.studentId})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này?')" class="btn-delete">Xóa</a>
+                            </td>
+                        </tr>
+						<tr th:if="${students.size() == 0}">
+							<td colspan="13" style="text-align: center;">Không có sinh viên nào!</td>
+						</tr>
+					</tbody>
+                </table>
+    			<div class="notification" th:if="${message}" th:classappend="${messageType == 'success'} ? 'notification-success' : 'notification-error'">
+    				<p th:text="${message}"></p>
+    			</div>
+    			<a class="btn-insert" th:href="@{/admin/student-management/add-student}">Thêm sinh viên</a>
+            </div>
+        </div>
+    </div>
+
+	<script>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	const notification = document.querySelector(".notification");
+        	if(notification) {
+            	setTimeout(() => {
+                	notification.style.display = "none";
+            	}, 2000);
+        	}
+    	});
+	</script>
+</body>
+
+</html>

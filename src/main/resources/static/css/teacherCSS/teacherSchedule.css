@@ -1,0 +1,158 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    height: 65px;
+    background-color: #255db8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-heading {
+    color: var(--white-color);
+    font-size: 2rem;
+    margin-left: 20px;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.header-avatar {
+    width: 30px;
+    margin-right: 8px;
+}
+
+.header-username {
+    font-size: 1.4rem;
+    color: var(--white-color);
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: fit-content;
+    height: calc(100vh - 65px);
+    background-color: #355282;
+    padding: 20px;
+}
+
+.sidebar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white-color);
+}
+
+.sidebar-heading-text {
+    font-size: 1.8rem;
+}
+
+.sidebar-heading-icon {
+    font-size: 1.8rem;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-item {
+
+}
+
+.sidebar-item-link {
+    color: var(--white-color);
+    text-decoration: none;
+    display: block;
+    font-size: 1.6rem;
+    padding: 14px 16px;
+    margin-top: 24px;
+}
+
+.sidebar-item-link:hover {
+    border-radius: 10px;
+    background-color: var(--white-color);
+    color: var(--text-color);
+    box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-item-icon {
+    width: 16px;
+    margin-right: 8px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-heading {
+	color: #255db8;
+	font-size: 2.6rem;
+	font-weight: 500;
+	margin-top: 40px;
+}
+
+.schedule-list {
+    border-collapse: collapse;
+    font-size: 1.3rem;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #255db8;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.schedule-list th,
+.schedule-list td {
+    border: 1px solid #255db8;
+    background-color: rgba(0, 0, 0, 0.05);
+    width: 180px;
+}
+
+.schedule-list td:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.schedule-list th {
+    background-color: #255db8;
+    color: var(--white-color);
+    border: 1px solid var(--white-color);
+    padding: 10px;
+}
+
+.schedule-list td {
+	vertical-align: top;
+}
+
+.schedule-list td > div {
+	margin: 10px;
+	height: 100px;
+}
+
+.course-name {
+    color: #255db8;
+    font-weight: 600;
+}
+
+.course-id {
+    margin-top: 6px;
+}
+
+.course-time {
+    margin-top: 6px;
+}
+
+.course-place {
+    margin-top: 6px;
+}

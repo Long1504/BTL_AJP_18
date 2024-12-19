@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý giảng viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/adminCSS/adminTeacherManagement.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Quản trị</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${admin.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/student-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-graduate"></i>
+                        Quản lý sinh viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/teacher-management}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-user-tie"></i>
+                        Quản lý giảng viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/course-management}">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Quản lý học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/feedback-management}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Xem đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="content-wrap">
+                <p class="content-heading">Quản lý giảng viên</p>
+                <div class="content-filter">
+                	<form action="/admin/teacher-management" method="get">
+	                    <label for="department">Khoa:</label>
+	                    <select class="content-filter-department" name="departmentName" id="department">
+	                        <option value="all" th:selected="${'all' == selectedDepartment}">Tất cả</option>
+	                        <option th:each="department : ${departments}" 
+	                        		th:value="${department.name}" 
+	                        		th:text="${department.name}"
+	                        		th:selected="${department.name == selectedDepartment}"></option>
+	                    </select>
+	                    <input class="btn-filter" type="submit" value="Lọc"/>
+                	</form>
+                </div>
+                
+                <table class="teacher-list">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã giảng viên</th>
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Quê quán</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Mật khẩu</th>
+                            <th>Phân quyền</th>
+                            <th>Khoa công tác</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="teacher, iterStat : ${teachers}">
+                            <td th:text="${iterStat.index + 1}" class="centered">1</td>
+                            <td th:text="${teacher.teacherId}" class="centered">GV001</td>
+                            <td th:text="${teacher.name}">Phạm Việt Long</td>
+                            <td th:text="${teacher.gender}" class="centered" >Nam</td>
+                            <td th:text="${#dates.format(teacher.birthday, 'dd/MM/yyyy')}">15/4/2004</td>
+                            <td th:text="${teacher.hometown}">Tuyên Quang</td>
+                            <td th:text="${teacher.phoneNumber}">0123456789</td>
+                            <td th:text="${teacher.email}">pvl1504@gmail.com</td>
+                            <td th:text="${teacher.password}">GV@123</td>
+                            <td th:text="${teacher.role}" class="centered">GV</td>
+                            <td th:text="${teacher.department}">Công nghệ thông tin</td>
+                            <td>
+                                <a th:href="@{/admin/teacher-management/update-teacher/{teacherId}(teacherId=${teacher.teacherId})}" class="btn-edit">Sửa</a>
+       							<a th:href="@{/admin/teacher-management/delete-teacher/{teacherId}(teacherId=${teacher.teacherId})}" onclick="return confirm('Bạn có chắc chắn muốn xóa giảng viên này?')" class="btn-delete">Xóa</a>
+                            </td>
+                        </tr>
+						<tr th:if="${teachers.size() == 0}">
+							<td colspan="12" style="text-align: center;">Không có giảng viên nào!</td>
+						</tr>
+					</tbody>
+                </table>
+    			<div class="notification" th:if="${message}" th:classappend="${messageType == 'success'} ? 'notification-success' : 'notification-error'">
+    				<p th:text="${message}"></p>
+    			</div>
+    			<a class="btn-insert" th:href="@{/admin/teacher-management/add-teacher}">Thêm giảng viên</a>
+            </div>
+        </div>
+    </div>
+
+	<script>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	const notification = document.querySelector(".notification");
+        	if(notification) {
+            	setTimeout(() => {
+                	notification.style.display = "none";
+            	}, 2000);
+        	}
+    	});
+	</script>
+</body>
+
+</html>

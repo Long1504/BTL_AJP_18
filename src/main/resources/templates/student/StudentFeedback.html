@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/studentCSS/studentFeedback.css}">
+</head>
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Sinh viên</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${student.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/infor}">
+                        <i class="sidebar-item-icon fa-solid fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/score-course-list}">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Kết quả học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/schedule}">
+                        <i class="sidebar-item-icon fa-solid fa-calendar-days"></i>
+                        Thời khóa biểu
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/feedback}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Gửi đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="notification" th:if="${message}" th:classappend="${messageType == 'success'} ? 'notification-success' : 'notification-error'">
+    			<p th:text="${message}"></p>
+    		</div>
+            <div class="content-wrap">
+                <form th:action="@{/student/feedback}" method="post">
+                    <p class="content-heading">Hãy để lại cảm nhận của bạn khi sử dụng hệ thống nhé! Đó là những đóng góp quan trọng giúp chúng tôi cải thiện hệ thống!</p>
+                    <textarea name="content" placeholder="Nhập nội dung ở đây..." th:value="${feedback.content}"></textarea>
+                    <input class="feedback-submit" type="submit" value="Gửi đánh giá">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	const notification = document.querySelector(".notification");
+        	if(notification) {
+            	setTimeout(() => {
+                	notification.style.display = "none";
+            	}, 2000);
+        	}
+    	});
+	</script>
+</body>
+</html>

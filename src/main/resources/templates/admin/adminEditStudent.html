@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật sinh viên</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/adminCSS/adminEditStudent.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Quản trị</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${admin.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/student-management}"  style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-user-graduate"></i>
+                        Quản lý sinh viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/teacher-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-tie"></i>
+                        Quản lý giảng viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/course-management}">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Quản lý học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/feedback-management}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Xem đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <p class="content-heading">Cập nhật thông tin sinh viên</p>
+            <form class="infor-update" th:action="@{/admin/student-management/update-student/{studentId}(studentId=${student.studentId})}" method="post">
+                <table class="infor-update-table">
+                	<tr>
+                        <td>Mã sinh viên:</td>
+                        <td th:text="${student.studentId}"></td>
+                        <td><input name="studentId" type="text" th:value="${student.studentId}"></td>
+                    </tr>
+                    <tr>
+                        <td>Họ và tên:</td>
+                        <td th:text="${student.name}"></td>
+                        <td><input name="name" type="text" th:value="${student.name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính:</td>
+                        <td th:text="${student.gender}">Nam</td>
+                        <td>
+                            <select name="gender">
+                                <option value="Nam" th:selected="${student.gender == 'Nam'}">Nam</option>
+                                <option value="Nữ" th:selected="${student.gender} == 'Nữ'">Nữ</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ngày sinh:</td>
+                        <td th:text="${#dates.format(student.birthday, 'dd/MM/yyyy')}"></td>
+                        <td><input type="date" name="birthday" th:value="${student.birthday}"></td>
+                    </tr>
+                    <tr>
+                        <td>Quê quán:</td>
+                        <td th:text="${student.hometown}"></td>
+                        <td><input type="text" name="hometown" th:value="${student.hometown}"></td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại:</td>
+                        <td th:text="${student.phoneNumber}"></td>
+                        <td><input type="text" name="phoneNumber" th:value="${student.phoneNumber}"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td th:text="${student.email}"></td>
+                        <td><input type="text" name="email" th:value="${student.email}"></td>
+                    </tr>
+                    <tr>
+                        <td>Mật khẩu:</td>
+                        <td th:text="${student.password}"></td>
+                        <td><input type="text" name="password" th:value="${student.password}"></td>
+                    </tr>
+                    <tr>
+                        <td>Phân quyền:</td>
+                        <td th:text="${student.role}"></td>
+                        <td><input type="text" name="role" th:value="${student.role}"></td>
+                    </tr>
+                    <tr>
+                        <td>Mã lớp:</td>
+                        <td th:text="${student.classId}"></td>
+                        <!-- <td><input type="text" name="classId" th:value="${student.classId}"></td> -->
+                        <td>
+                        	<select name="classId">
+                                <option th:each="class : ${classes}" th:value="${class.classId}" th:selected="${student.classId} == ${class.classId}" th:text="${class.classId}"></option>
+                        	</select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mã khoa:</td>
+                        <td th:text="${student.departmentId}"></td>
+                        <td>
+                            <select name="departmentId">
+                                <option th:each="department : ${departments}" th:value="${department.departmentId}" th:selected="${student.departmentId} == ${department.departmentId}" th:text="${department.departmentId}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div class="infor-update-btn">
+                    <input class="btn-reset" type="button" value="Làm mới" onclick="reset()">
+                    <input class="btn-submit" type="submit" value="Cập nhật">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function reset() {
+            document.getElementsByClassName(infor-update).reset();
+        }
+    </script>
+</body>
+
+</html>

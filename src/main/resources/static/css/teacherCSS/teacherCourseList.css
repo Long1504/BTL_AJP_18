@@ -1,0 +1,159 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    height: 65px;
+    background-color: #255db8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-heading {
+    color: var(--white-color);
+    font-size: 2rem;
+    margin-left: 20px;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.header-avatar {
+    width: 30px;
+    margin-right: 8px;
+}
+
+.header-username {
+    font-size: 1.4rem;
+    color: var(--white-color);
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: fit-content;
+    height: calc(100vh - 65px);
+    background-color: #355282;
+    padding: 20px;
+}
+
+.sidebar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white-color);
+}
+
+.sidebar-heading-text {
+    font-size: 1.8rem;
+}
+
+.sidebar-heading-icon {
+    font-size: 1.8rem;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-item {
+
+}
+
+.sidebar-item-link {
+    color: var(--white-color);
+    text-decoration: none;
+    display: block;
+    font-size: 1.6rem;
+    padding: 14px 16px;
+    margin-top: 24px;
+}
+
+.sidebar-item-link:hover {
+    border-radius: 10px;
+    background-color: var(--white-color);
+    color: var(--text-color);
+    box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-item-icon {
+    width: 16px;
+    margin-right: 8px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px; */
+}
+
+.courses-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    max-height: calc(100vh - 65px - 30px);
+    overflow-y: auto;
+}
+
+.courses-item {
+    font-size: 1.5rem;
+    width: 600px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-left: 3px solid #255db8;
+    border-radius: 10px;
+    margin: 30px 0 0 30px;
+}
+
+.courses-item:hover {
+    box-shadow: 2px 2px 8	px 1px rgba(0, 0, 0, 0.1);
+    border-right: 3px solid #255db8;
+    background-color: #e8e8e8;
+}
+
+.courses-item-link {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    padding: 20px;
+}
+
+.course-name {
+    font-size: 2rem;
+    color: #255db8;
+    margin-bottom: 16px;
+}
+
+.course-id-wrap {
+    display: flex;
+    margin-top: 8px;
+}
+
+.course-credit-wrap {
+    display: flex;
+    margin-top: 8px;
+}
+
+.course-students-wrap {
+    display: flex;
+    margin-top: 8px;
+}
+
+.course-id {
+    margin-left: 6px;
+}
+
+.course-credit {
+    margin-left: 6px;
+}
+
+.course-students {
+    margin-left: 6px;
+}

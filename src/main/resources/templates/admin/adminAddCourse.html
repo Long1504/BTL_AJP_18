@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm học phần</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/adminCSS/adminAddCourse.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Quản trị</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${admin.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/student-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-graduate"></i>
+                        Quản lý sinh viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/teacher-management}">
+                        <i class="sidebar-item-icon fa-solid fa-user-tie"></i>
+                        Quản lý giảng viên
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/course-management}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Quản lý học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/admin/feedback-management}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Xem đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <p class="content-heading">Thêm mới học phần</p>
+            <form class="infor-update" th:action="@{/admin/course-management/add-course}" method="post">
+                <table class="infor-update-table">
+                	<tr>
+                        <td>Mã học phần:</td>
+                        <td><input name="courseId" type="text" th:value="${course.courseId}"></td>
+                    </tr>
+                    <tr>
+                        <td>Tên học phần:</td>
+                        <td><input name="name" type="text" th:value="${course.name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Số tín chỉ:</td>
+                        <td><input type="text" name="credit" th:value="${course.credit}"></td>
+                    </tr>
+                    <tr>
+                        <td>Ngày học:</td>
+                        <!-- <td><input type="text" name="date" th:value="${course.date}"></td> -->
+                        <td>
+                            <select name="date">
+                                <option value="Thứ 2">Thứ 2</option>
+                                <option value="Thứ 3">Thứ 3</option>
+                                <option value="Thứ 4">Thứ 4</option>
+                                <option value="Thứ 5">Thứ 5</option>
+                                <option value="Thứ 6">Thứ 6</option>
+                                <option value="Thứ 7">Thứ 7</option>
+                                <option value="Chủ nhật">Chủ nhật</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ca học:</td>
+                        <td><input type="text" name="time" th:value="${course.time}"></td>
+                    </tr>
+                    <tr>
+                        <td>Phòng học:</td>
+                        <td><input type="text" name="room" th:value="${course.room}"></td>
+                    </tr>
+                    <tr>
+                        <td>Mã giảng viên:</td>
+                        <td><input type="text" name="teacherId" th:value="${course.teacherId}"></td>
+                    </tr>
+                </table>
+                <div class="infor-update-btn">
+                    <input class="btn-reset" type="button" value="Làm mới" onclick="reset()">
+                    <input class="btn-submit" type="submit" value="Thêm học phần">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function reset() {
+            document.getElementsByClassName(infor-update).reset();
+        }
+    </script>
+</body>
+
+</html>

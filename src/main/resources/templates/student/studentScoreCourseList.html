@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả học phần</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/studentCSS/studentScoreCourseList.css}">
+</head>
+
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Sinh viên</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${student.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/infor}">
+                        <i class="sidebar-item-icon fa-solid fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/score-course-list}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Kết quả học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/schedule}">
+                        <i class="sidebar-item-icon fa-solid fa-calendar-days"></i>
+                        Thời khóa biểu
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/student/feedback}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Gửi đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+		<div class="content">
+			<div class="content-wrap">
+				<!-- <p class="content-heading">Danh sách</p> -->
+				<table class="score-course-list">
+					<thead>
+						<tr>
+							<th rowspan="2">STT</th>
+							<th rowspan="2">Mã học phần</th>
+							<th rowspan="2">Tên học phần</th>
+							<th colspan="2">Điểm thường xuyên</th>
+							<th rowspan="2">Điểm thi</th>
+							<th colspan="3">Trung bình môn</th>
+							<th rowspan="2">Xếp loại</th>
+						</tr>
+						<tr>
+							<th>Thường xuyên 1</th>
+							<th>Thường xuyên 2</th>
+							<th>Điểm thang 10</th>
+							<th>Điểm thang 4</th>
+							<th>Điểm chữ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="scoreCourse, iterStat : ${scoreCourses}">
+							<td th:text="${iterStat.index + 1}" class="centered"></td>
+							<td th:text="${scoreCourse.courseId}" class="centered"></td>
+							<td th:text="${scoreCourse.courseName}"></td>
+							<td th:text="${scoreCourse.score1}" class="centered"></td>
+							<td th:text="${scoreCourse.score2}" class="centered"></td>
+							<td th:text="${scoreCourse.scoreFinal}" class="centered"></td>
+							<td th:text="${scoreCourse.scoreOverall10}" class="centered"></td>
+							<td th:text="${scoreCourse.scoreOverall4}" class="centered"></td>
+							<td th:text="${scoreCourse.scoreAlpha}" class="centered"></td>
+							<td th:text="${scoreCourse.rank}" class="centered"></td>
+						</tr>
+						<tr th:if="${scoreCourses.size() == 0}">
+							<td colspan="10" style="text-align: center;">Bạn chưa đăng
+								ký học phần nào!</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="GPA-wrap">
+					<p class="GPA-text">Trung bình trung tích lũy:</p>
+					<p class="GPA" th:text="${GPA}"></p>
+				</div>
+				<div class="rank-wrap">
+					<p class="rank-text">Xếp loại tốt nghiệp:</p>
+					<p class="rank" th:if="${GPA} >= 3.6">Xuất sắc</p>
+					<p class="rank" th:if="${GPA} >= 3.2 and ${GPA} < 3.6">Giỏi</p>
+					<p class="rank" th:if="${GPA} >= 2.5 and ${GPA} < 3.2">Khá</p>
+					<p class="rank" th:if="${GPA} >= 2 and ${GPA} < 2.5">Trung bình</p>
+					<p class="rank" th:if="${GPA} >= 0 and ${GPA} < 2">Yếu</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

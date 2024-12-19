@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý điểm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/teacherCSS/teacherScoreManagement.css}">
+</head>
+<body>
+    <header class="header">
+        <p class="header-heading">Hệ thống quản lý sinh viên - Giảng viên</p>
+        <div class="header-user">
+            <img th:src="@{/img/avatar.png}" alt="Avatar" class="header-avatar">
+            <p class="header-username" th:text="${teacher.name}">Phạm Việt Long</p>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-heading">
+                <p class="sidebar-heading-text">MENU</p>
+                <i class="sidebar-heading-icon fa-solid fa-bars"></i>
+            </div>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/teacher/home}">
+                        <i class="sidebar-item-icon fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/teacher/infor}">
+                        <i class="sidebar-item-icon fa-solid fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/teacher/course-list}" style="border-radius: 10px; background-color: var(--white-color); color: var(--text-color); box-shadow: 1px 2px 4px 1px rgba(0, 0, 0, 0.3);">
+                        <i class="sidebar-item-icon fa-solid fa-book"></i>
+                        Học phần
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/teacher/schedule}">
+                        <i class="sidebar-item-icon fa-solid fa-calendar-days"></i>
+                        Lịch giảng dạy
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/teacher/feedback}">
+                        <i class="sidebar-item-icon fa-solid fa-comments"></i>
+                        Gửi đánh giá
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-item-link" th:href="@{/logout}">
+                        <i class="sidebar-item-icon fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="content-heading">
+                <p class="content-heading-name" th:text="${course.name}">Thực tập cơ sở ngành</p>
+                <p> - </p>
+                <p class="content-heading-id" th:text="${course.courseId}">HP00001</p>
+            </div>
+            <form class="score-management" th:action="@{/teacher/course-list/score-management}" method="post">
+                <input type="hidden" name="courseId" th:value="${course.courseId}">
+                <table class="score-list">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã sinh viên</th>
+                        <th>Họ và tên</th>
+                        <th>Thường xuyên 1</th>
+                        <th>Thường xuyên 2</th>
+                        <th>Kết quả thi</th>
+                    </tr>
+                    <tr th:each="scoreCourse, iterStat : ${scoreCourses}">
+                        <td th:text="${iterStat.index + 1}">1</td>
+                        <td th:text="${scoreCourse.studentId}">SV00000001</td>
+                        <td th:text="${scoreCourse.studentName}">Phạm Việt Long</td>
+                        <td><input type="text" th:name="score1" th:value="${scoreCourse.score1 == -1 ? '' : scoreCourse.score1}"></td>
+                        <td><input type="text" th:name="score2" th:value="${scoreCourse.score2 == -1 ? '' : scoreCourse.score2}"></td>
+                        <td><input type="text" th:name="scoreFinal" th:value="${scoreCourse.scoreFinal == -1 ? '' : scoreCourse.scoreFinal}"></td>
+                    </tr>
+                </table>
+                <!-- <input type="hidden" name="scoreCourses" th:value="${scoreCourses}"> -->
+                <input class="score-submit" type="submit" value="Cập nhật điểm">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
